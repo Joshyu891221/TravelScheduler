@@ -1,9 +1,12 @@
 import axios from "axios";
+import { register as registerAction } from './../reducers/loginSlice.js';
+import { getUser as getUserAction } from './../reducers/loginSlice.js';
+// import { loggedOut } from './../reducers/loginSlice.js';
 axios.defaults.withCredentials = true;
 
-export const loggedoutwithgoogle = () => ({
-  type: "LoggedOutWithGoogle",
-});
+// export const loggedoutwithgoogle = () => ({
+//   type: "LoggedOutWithGoogle",
+// });
 
 export const register = (displayName, email, photoURL) => {
   return async (dispatch) => {
@@ -23,12 +26,13 @@ export const register = (displayName, email, photoURL) => {
         // 將user_id寫入localStorage
         if (res.success === true) {
           localStorage.setItem("user_id", res.data.user_id);
-          dispatch({
-            type: "Register",
-            payload: {
-              userId: res.data.user_id,
-            },
-          });
+          // dispatch({
+          //   type: "Register",
+          //   payload: {
+          //     userId: res.data.user_id,
+          //   },
+          // });
+          dispatch(registerAction({ userId: res.data.user_id }));
         }
       })
       .catch((err) => {
@@ -45,15 +49,21 @@ export const getUser = () => {
       .then((res) => (res = res.data))
       .then((res) => {
         if (res.success === true) {
-          dispatch({
-            type: "GetUser",
-            payload: {
+          // dispatch({
+          //   type: "GetUser",
+          //   payload: {
+          //     userId: res.data.user_id,
+          //     displayName: res.data.username,
+          //     email: res.data.email,
+          //     photoURL: res.data.photoURL,
+          //   },
+          // });
+          dispatch(getUserAction({
               userId: res.data.user_id,
               displayName: res.data.username,
               email: res.data.email,
               photoURL: res.data.photoURL,
-            },
-          });
+          }));
         }
       })
       .catch((err) => {

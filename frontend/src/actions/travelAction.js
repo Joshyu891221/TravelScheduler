@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getTravels } from './../reducers/travelSlice.js';
 
 export const gettravel = () => {
     return (dispatch) => {
@@ -7,10 +8,11 @@ export const gettravel = () => {
             .then(res => res = res.data)
             .then(res => {
                 if (res.success === true) {
-                    dispatch({
-                        type: "GetTravels",
-                        payload: res.data.travels
-                    })
+                    dispatch(getTravels(res.data.travels));
+                    // dispatch({
+                    //     type: "GetTravels",
+                    //     payload: res.data.travels
+                    // })
                 }
             }).catch(err => {
                 console.log('error: ' + err.message);

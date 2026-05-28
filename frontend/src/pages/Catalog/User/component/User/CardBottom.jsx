@@ -3,7 +3,7 @@ import { createUseStyles } from 'react-jss'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { getAuth, signOut } from 'firebase/auth'
-import { loggedoutwithgoogle } from '../../../../../actions/loginAction.js'
+import { loggedOut } from '../../../../../reducers/loginSlice.js'
 import LogoutIcon from './../../../../../assets/CardBottom/logoutIcon.png'
 import LogoutIconHovered from './../../../../../assets/CardBottom/logoutIconHovered.png'
 
@@ -79,7 +79,7 @@ const CardBottom = () => {
     const handleLogout = () => {
         // 確認是在登入狀態
         if(localStorage.getItem("user_id") != null) {
-            dispatcher(loggedoutwithgoogle());
+            dispatcher(loggedOut());
             const auth = getAuth();
             signOut(auth).then(() => {
                 // 登出同時清除Storage中的資料

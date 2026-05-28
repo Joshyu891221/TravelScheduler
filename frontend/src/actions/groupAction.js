@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { getGroup } from './../reducers/groupSlice.js';
 export const getgroup = () => {
     return (dispatch) => {
         const hostUrl = import.meta.env.VITE_HOST_URL;
@@ -7,10 +7,11 @@ export const getgroup = () => {
             .then((res) => (res = res.data))
             .then((res) => {
                 if (res.success === true) {
-                    dispatch({
-                        type: "GetGroup",
-                        payload: res.data.groups,
-                    });
+                    dispatch(getGroup(res.data.groups));
+                    // dispatch({
+                    //     type: "GetGroup",
+                    //     payload: res.data.groups,
+                    // });
                 }
             })
             .catch((err) => {
